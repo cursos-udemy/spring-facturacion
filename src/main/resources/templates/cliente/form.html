@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/head::head"></head>
+<body>
+  <header th:replace="layout/navbar::navbar"></header>
+  <div class="container">
+    <div class="card">
+
+      <div class="card-header">
+        <h4 th:text="${titulo}" class="text-secondary"></h4>
+      </div>
+
+      <div class="card-body">
+        <div th:object="${cliente}" th:remove="tag">
+          <ul th:if="${#fields.hasErrors('*')}" class="text-danger">
+            <li th:each="err: ${#fields.errors('*')}" th:text="${err}"></li>
+          </ul>
+        </div>
+        <div class="row mb-5">
+          <div class="col-md-12">
+            <form th:action="@{/cliente/form}" th:object="${cliente}" th:method="post" enctype="multipart/form-data">
+              <!-- <input type="hidden" id="form-cliente-id" th:field="*{id}"> -->
+              <div class="row">
+                <div class="form-group col-md-6">
+                  <label for="form-cliente-nombre" class="col-form-label">Nombre</label>
+                  <input id="form-cliente-nombre" th:field="*{nombre}" type="text" class="form-control" placeholder="Nombre"
+                    th:errorclass="'form-control is-invalid'">
+                  <small th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="form-text text-danger"></small>
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="form-cliente-apellido" class="col-form-label">Apellido</label>
+                  <input id="form-cliente-apellido" th:field="*{apellido}" type="text" class="form-control" placeholder="Apellido"
+                    th:errorclass="'form-control is-invalid'">
+                  <small th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}" class="form-text text-danger"></small>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-6 mb-4">
+                  <label for="form-cliente-email" class="col-form-label">Email</label>
+                  <input id="form-cliente-email" th:field="*{email}" type="text" class="form-control" placeholder="Email"
+                    th:errorclass="'form-control is-invalid'">
+                  <small th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="form-text text-danger"></small>
+                </div>
+                <div class="form-group col-md-6 mb-4">
+                  <label for="form-cliente-createAt" class="col-form-label">Fecha Alta</label>
+                  <input id="form-cliente-createAt" th:field="*{createAt}" type="text" class="form-control" data-date-format="dd/mm/yyyy"
+                    autocomplete="off" th:errorclass="'form-control is-invalid'">
+                  <small th:if="${#fields.hasErrors('createAt')}" th:errors="*{createAt}" class="form-text text-danger"></small>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-6 mb-4">
+                  <label for="form-cliente-foto" class="col-form-label">Foto</label>
+                  <div class="custom-file mb-3">
+                    <input id="form-cliente-foto" name="form-cliente-foto" type="file" class="custom-file-input btn-file-upload"
+                      aria-describedby="form-cliente-foto">
+                    <label class="custom-file-label" for="form-cliente-foto"><span th:text="${foto}"></span></label>
+                  </div>
+                  <small th:if="${#fields.hasErrors('foto')}" th:errors="*{foto}" class="form-text text-danger"></small>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-md-12">
+                  <button type="submit" class="btn btn-outline-success">Guardar</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer th:replace="layout/footer::footer"></footer>
+  <script>
+			$(document).ready(function() {
+				bsCustomFileInput.init()
+			});
+			
+			$('#form-cliente-createAt').datepicker({
+				autoclose : true,
+				todayHighlight : true
+			});
+		</script>
+</body>
+</html>

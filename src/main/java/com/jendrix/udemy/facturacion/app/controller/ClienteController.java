@@ -26,7 +26,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.jendrix.udemy.facturacion.app.model.entity.Cliente;
+import com.jendrix.udemy.facturacion.app.model.entity.Factura;
 import com.jendrix.udemy.facturacion.app.model.service.ClienteService;
+import com.jendrix.udemy.facturacion.app.model.service.FacturaService;
 import com.jendrix.udemy.facturacion.app.model.service.UploadFileService;
 import com.jendrix.udemy.facturacion.app.util.paginator.PageRender;
 
@@ -37,6 +39,9 @@ public class ClienteController {
 
 	@Autowired
 	private ClienteService clienteService;
+
+	@Autowired
+	private FacturaService facturaService;
 
 	@Autowired
 	private UploadFileService uploadFileService;
@@ -59,8 +64,15 @@ public class ClienteController {
 		if (cliente != null) {
 			model.addAttribute("titulo", "Cliente " + id);
 			model.addAttribute("cliente", cliente);
+
+			Iterable<Factura> facturas = this.facturaService.findByCliente(cliente.getId());
+			if (facturas != null) {
+				model.addAttribute("facturas", facturas);
+			}
+			
 			return "cliente/view";
 		}
+
 		flash.addFlashAttribute("error", "No se encontro el cliente");
 		return "cliente/listar";
 	}

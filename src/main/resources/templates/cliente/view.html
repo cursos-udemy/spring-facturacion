@@ -7,14 +7,40 @@
     <div class="card">
       <div class="card-header" th:text="${titulo}"></div>
       <div class="card-body">
-        <img th:if="${cliente.foto}" th:src="@{/uploads/}+${cliente.foto}" th:alt="${cliente.foto}"
-          class="img-thumbnail float-left" style="max-width: 25%">
+        <img th:if="${cliente.foto}" th:src="@{/uploads/}+${cliente.foto}" th:alt="${cliente.foto}" class="img-thumbnail float-left"
+          style="max-width: 25%">
         <ul class="list-group">
           <li class="list-group-item" th:text="${cliente.nombre}"></li>
           <li class="list-group-item" th:text="${cliente.apellido}"></li>
           <li class="list-group-item" th:text="${cliente.email}"></li>
           <li class="list-group-item" th:text="${cliente.createAt}"></li>
         </ul>
+
+
+        <div th:if="${#lists.isEmpty(facturas)}" class="alert alert-info my-4"
+          th:text="'No hay facturas asignadas para el cliente ' + ${cliente.nombre} + ' ' + ${cliente.apellido}"></div>
+
+        <table th:if="${not #lists.isEmpty(facturas)}" class="table table-bordered table-striped my-4">
+          <thead class="thead-dark">
+            <tr>
+              <th>id</th>
+              <th>descripción</th>
+              <th>fecha</th>
+              <th>total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="factura: ${facturas}">
+              <td th:text="${factura.id}"></td>
+              <td th:text="${factura.descripcion}"></td>
+              <td th:text="${factura.fecha}"></td>
+              <td th:text="${factura.importeFactura}"></td>
+            </tr>
+          </tbody>
+
+        </table>
+
+
       </div>
     </div>
   </div>

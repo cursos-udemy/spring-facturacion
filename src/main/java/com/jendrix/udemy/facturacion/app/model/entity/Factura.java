@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -70,7 +71,15 @@ public class Factura implements Serializable {
 
 	public Factura() {
 		super();
+		this.tipoFactura = FacturaType.C;
+		this.numero = UUID.randomUUID().toString();
 		this.items = new ArrayList<>();
+		this.fecha = new Date();
+	}
+
+	public Factura(Cliente cliente) {
+		this();
+		this.cliente = cliente;
 	}
 
 	@PrePersist

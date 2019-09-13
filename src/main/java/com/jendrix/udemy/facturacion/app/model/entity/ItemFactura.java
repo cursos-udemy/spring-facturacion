@@ -73,4 +73,13 @@ public class ItemFactura implements Serializable {
 	public BigDecimal getImporteTotal() {
 		return getImporteUnitario().multiply(new BigDecimal(getCantidad()));
 	}
+
+	public Producto getProducto() {
+		return producto;
+	}
+
+	public void setProducto(Producto producto) {
+		this.producto = producto;
+	}
+
 }

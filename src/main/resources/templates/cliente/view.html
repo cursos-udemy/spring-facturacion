@@ -23,10 +23,11 @@
         <table th:if="${not #lists.isEmpty(facturas)}" class="table table-bordered table-striped my-4">
           <thead class="thead-dark">
             <tr>
-              <th>id</th>
-              <th>descripción</th>
-              <th>fecha</th>
-              <th>total</th>
+              <th>Id</th>
+              <th>Descripción</th>
+              <th>Fecha</th>
+              <th>Total</th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -35,6 +36,14 @@
               <td th:text="${factura.descripcion}"></td>
               <td th:text="${factura.fecha}"></td>
               <td th:text="${factura.importeFactura}"></td>
+              <td>
+                <a th:href="@{/factura/view/}+${factura.id}" class="btn btn-info mx-2">
+                  <i class="fas fa-search text-white"></i>
+                </a>              
+                <a th:href="@{/factura/delete/}+${factura.id}" class="btn btn-danger mx-2" onclick="return confirm('¿Seguro que desea eliminar la factura?');">
+                  <i class="fas fa-trash text-white"></i>
+                </a>              
+              </td>
             </tr>
           </tbody>
 

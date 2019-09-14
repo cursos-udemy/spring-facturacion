@@ -23,7 +23,8 @@ public class FacturaServiceImpl implements FacturaService {
 	@Override
 	@Transactional(readOnly = true)
 	public Factura findById(Long id) {
-		return this.facturaRepository.findById(id).orElse(null);
+		//return this.facturaRepository.findById(id).orElse(null);
+		return this.facturaRepository.fetchById(id);
 	}
 
 	@Override

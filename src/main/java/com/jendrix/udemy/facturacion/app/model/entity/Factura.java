@@ -61,7 +61,7 @@ public class Factura implements Serializable {
 	@Column(name = "observaciones")
 	private String observaciones;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
 

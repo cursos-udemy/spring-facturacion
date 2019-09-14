@@ -36,7 +36,7 @@ public class ItemFactura implements Serializable {
 	@Column(name = "importe_unitario")
 	private BigDecimal importeUnitario;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "producto_id")
 	private Producto producto;
 

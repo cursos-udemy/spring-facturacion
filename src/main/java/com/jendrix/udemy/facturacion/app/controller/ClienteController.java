@@ -54,7 +54,7 @@ public class ClienteController {
 		PageRender<Cliente> pageRender = new PageRender<Cliente>("/cliente/listar", pageClientes);
 		model.addAttribute("clientes", pageClientes);
 		model.addAttribute("page", pageRender);
-		return "cliente/listar";
+		return "pages/cliente/listar";
 	}
 
 	@GetMapping("/view/{id}")
@@ -70,18 +70,18 @@ public class ClienteController {
 				model.addAttribute("facturas", facturas);
 			}
 			
-			return "cliente/view";
+			return "pages/cliente/view";
 		}
 
 		flash.addFlashAttribute("error", "No se encontro el cliente");
-		return "cliente/listar";
+		return "pages/cliente/listar";
 	}
 
 	@GetMapping("/form")
 	public String crear(Model model) {
 		model.addAttribute("titulo", "Alta Cliente");
 		model.addAttribute("cliente", new Cliente());
-		return "cliente/form";
+		return "page/cliente/form";
 	}
 
 	@PostMapping("/form")
@@ -91,7 +91,7 @@ public class ClienteController {
 
 		if (result.hasErrors()) {
 			model.addAttribute("titulo", "Alta Cliente");
-			return "cliente/form";
+			return "pages/cliente/form";
 		}
 
 		if (!file.isEmpty()) {
@@ -121,7 +121,7 @@ public class ClienteController {
 			if (cliente != null) {
 				model.addAttribute("titulo", "Cliente");
 				model.addAttribute("cliente", cliente);
-				return "cliente/form";
+				return "pages/cliente/form";
 			} else {
 				flash.addFlashAttribute("error", "No se encontro al cliente solicitado");
 				return "redirect:/cliente/listar";

@@ -62,7 +62,7 @@ public class FacturaController {
 		Cliente cliente = clienteService.findById(clienteId);
 		if (cliente == null) {
 			flash.addFlashAttribute("error", "El cliente no existe en la base de datos");
-			return "redirect:/listar";
+			return "redirect:/cliente/listar";
 		}
 
 		model.addAttribute("titulo", "Crear Factura");

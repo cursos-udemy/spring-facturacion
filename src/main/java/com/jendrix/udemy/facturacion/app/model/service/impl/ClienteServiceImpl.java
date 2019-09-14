@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jendrix.udemy.facturacion.app.model.entity.Cliente;
+import com.jendrix.udemy.facturacion.app.model.entity.Factura;
 import com.jendrix.udemy.facturacion.app.model.repository.ClienteRepository;
+import com.jendrix.udemy.facturacion.app.model.repository.FacturaRepository;
 import com.jendrix.udemy.facturacion.app.model.service.ClienteService;
 
 @Service
@@ -17,6 +19,9 @@ public class ClienteServiceImpl implements ClienteService {
 
 	@Autowired
 	private ClienteRepository clienteRepository;
+	
+	@Autowired
+	private FacturaRepository facturaRepository;
 
 	@Override
 	@Transactional(readOnly = true)
@@ -45,6 +50,15 @@ public class ClienteServiceImpl implements ClienteService {
 	@Override
 	@Transactional
 	public void delete(Long id) {
+		
+		// Eliminar las facturas del cliente
+		Iterable<Factura> facturas = this.facturaRepository.findByCliente(id);
+		if (facturas != null) {
+			for (Factura f : facturas) {
+				this.facturaRepository.delete(f);
+			}
+		}
+		
 		this.clienteRepository.deleteById(id);
 	}
 

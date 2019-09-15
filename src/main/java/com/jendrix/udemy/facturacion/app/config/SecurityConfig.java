@@ -33,14 +33,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		// Autorizacion a rutas y recursos
 		http.authorizeRequests()
-				.antMatchers("/", "/css/**", "/js/**", "/images/**", "/cliente/listar").permitAll()
+				.antMatchers("/", "/css/**", "/js/**", "/images/**", "/fonts/**", "/vendor/**","/cliente/listar").permitAll()
 				.antMatchers("/uploads/**").hasAnyRole("USER")
 				.antMatchers("/cliente/view/**").hasAnyRole("USER")
 				.antMatchers("/cliente/form/**").hasAnyRole("ADMIN")
 				.antMatchers("/cliente/eliminar/**").hasAnyRole("ADMIN")
 				.antMatchers("/factura/**").hasAnyRole("ADMIN")
 				.anyRequest().authenticated()
-				.and().formLogin().and().httpBasic();
+				.and().formLogin().loginPage("/login").permitAll()
+				.and().logout().permitAll();
 	}
 
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <body>
   <header th:fragment="navbar">
     <nav class="navbar navbar-expand-lg navbar-dark bg-secondary mb-4">
@@ -18,6 +18,24 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" th:href="@{/cliente/listar}">Clientes</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav navbar-right">
+          <li sec:authorize="!isAuthenticated()">
+            <a th:href="@{/login}" class="btn btn-secondary">Sign In</a>
+          </li>
+
+          <li class="dropdown" sec:authorize="isAuthenticated()">
+            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false"> <span sec:authentication="name"></span> </a>
+
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <a class="dropdown-item" href="#">Perfil</a>
+              <div class="dropdown-divider"></div>
+              <form id="formLogout" th:action="@{/logout}" method="post">
+                <button type="submit" class="dropdown-item">Sign out</button>
+              </form>      
+            </div>
           </li>
         </ul>
       </div>

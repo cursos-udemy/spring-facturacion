@@ -33,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		// Autorizacion a rutas y recursos
 		http.authorizeRequests()
-				.antMatchers("/", "/css/**", "/js/**", "/images/**", "/fonts/**", "/vendor/**","/cliente/listar").permitAll()
+				.antMatchers("/", "/css/**", "/js/**", "/images/**", "/fonts/**", "/vendor/**","/cliente/listar", "/errors/**").permitAll()
 				.antMatchers("/uploads/**").hasAnyRole("USER")
 				.antMatchers("/cliente/view/**").hasAnyRole("USER")
 				.antMatchers("/cliente/form/**").hasAnyRole("ADMIN")
@@ -41,7 +41,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/factura/**").hasAnyRole("ADMIN")
 				.anyRequest().authenticated()
 				.and().formLogin().loginPage("/login").permitAll()
-				.and().logout().permitAll();
+				.and().logout().permitAll()
+				.and().exceptionHandling().accessDeniedPage("/403");
 	}
 
 }

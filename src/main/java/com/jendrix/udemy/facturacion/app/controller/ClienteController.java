@@ -3,6 +3,7 @@ package com.jendrix.udemy.facturacion.app.controller;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -18,6 +19,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestWrapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -55,7 +57,8 @@ public class ClienteController {
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@GetMapping("/listar")
-	public String listar(@RequestParam(name = "page", defaultValue = "0") int page, Model model, Authentication authentication) {
+	public String listar(@RequestParam(name = "page", defaultValue = "0") int page, Model model, Authentication authentication,
+			HttpServletRequest request) {
 		// version-1 recuperar informcion de autenticacion desde un argumento del metodo
 		if (authentication != null) {
 			log.info(String.format("El usuario %s solicita consultar la lista de usuarios", authentication.getName()));
@@ -69,6 +72,16 @@ public class ClienteController {
 
 		if (hasRole("ROLE_ADMIN")) {
 			log.info("OK, tu eres un usuario con rol ADMIN, puedes realizar tranquilamente esta accion");
+		}
+
+		SecurityContextHolderAwareRequestWrapper securityContextWrapper = new SecurityContextHolderAwareRequestWrapper(request, "ROLE_");
+		if (securityContextWrapper.isUserInRole("ADMIN")) {
+			// si en el wrapper no defino el prefijo, en el chequeo utilizo el nombre de rol completo.
+			log.info("Si si, volvi a validar que tengas el rol ADMIN, pero esta vez de otra manera");
+		}
+
+		if (request.isUserInRole("ROLE_ADMIN")) {
+			log.info("A traves del HttpeServletRequest es mas simple hacer la validacion del rol");
 		}
 
 		model.addAttribute("titulo", "Listado de clientes");

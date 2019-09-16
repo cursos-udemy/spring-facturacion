@@ -5,6 +5,8 @@ import java.net.MalformedURLException;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
@@ -12,6 +14,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -46,8 +52,25 @@ public class ClienteController {
 	@Autowired
 	private UploadFileService uploadFileService;
 
+	private Logger log = LoggerFactory.getLogger(this.getClass());
+
 	@GetMapping("/listar")
-	public String listar(@RequestParam(name = "page", defaultValue = "0") int page, Model model) {
+	public String listar(@RequestParam(name = "page", defaultValue = "0") int page, Model model, Authentication authentication) {
+		// version-1 recuperar informcion de autenticacion desde un argumento del metodo
+		if (authentication != null) {
+			log.info(String.format("El usuario %s solicita consultar la lista de usuarios", authentication.getName()));
+		}
+
+		// version-2: recuperar informacion de autenticacion desde el contexto de spring-security. Forma estatica
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if (auth != null) {
+			log.info(String.format("El usuario %s tiene los roles %s", auth.getName(), auth.getAuthorities()));
+		}
+
+		if (hasRole("ROLE_ADMIN")) {
+			log.info("OK, tu eres un usuario con rol ADMIN, puedes realizar tranquilamente esta accion");
+		}
+
 		model.addAttribute("titulo", "Listado de clientes");
 		Pageable pageable = PageRequest.of(page, 4);
 		Page<Cliente> pageClientes = this.clienteService.findAll(pageable);
@@ -69,7 +92,7 @@ public class ClienteController {
 			if (facturas != null) {
 				model.addAttribute("facturas", facturas);
 			}
-			
+
 			return "pages/cliente/view";
 		}
 
@@ -154,5 +177,20 @@ public class ClienteController {
 		return ResponseEntity.ok()
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attatchment; filename=\"" + resource.getFilename() + "\"")
 				.body(resource);
+	}
+
+	public boolean hasRole(String role) {
+
+		SecurityContext securityContext = SecurityContextHolder.getContext();
+		if (securityContext == null) {
+			return false;
+		}
+
+		Authentication authentication = securityContext.getAuthentication();
+		if (authentication == null) {
+			return false;
+		}
+
+		return authentication.getAuthorities().contains(new SimpleGrantedAuthority(role));
 	}
 }

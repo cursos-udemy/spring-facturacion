@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="layout/head::head"></head>
 <body>
   <header th:replace="layout/navbar::navbar"></header>
@@ -11,7 +11,7 @@
           <h4 th:text="${titulo}" class="text-secondary"></h4>
         </div>
         <div class="float-right">
-          <a th:href="@{/cliente/form}" class="btn btn-info">Crear Cliente</a>
+          <a th:href="@{/cliente/form}" sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-info">Crear Cliente</a>
         </div>
       </div>
       <div class="card-body">
@@ -29,22 +29,24 @@
           <tbody>
             <tr th:each="cliente: ${clientes}">
               <td>
-                <a th:href="@{/cliente/view/}+${cliente.id}" th:text="${cliente.id}"> </a>
+                <a sec:authorize="isAuthenticated()" th:href="@{/cliente/view/}+${cliente.id}" th:text="${cliente.id}"> </a>
+                <span sec:authorize="!isAuthenticated()" th:text="${cliente.id}"></span>
               </td>
               <td th:text="${cliente.nombre}"></td>
               <td th:text="${cliente.apellido}"></td>
               <td th:text="${cliente.email}"></td>
               <td th:text="${cliente.createAt}"></td>
               <td>
-                <a th:href="@{/cliente/form/}+${cliente.id}">
+                <a th:href="@{/cliente/form/}+${cliente.id}" sec:authorize="hasRole('ROLE_ADMIN')">
                   <i class="fas fa-pencil-alt text-secondary"></i>
                 </a>
                 &nbsp;
-                <a th:href="@{/factura/form/}+${cliente.id}">
+                <a th:href="@{/factura/form/}+${cliente.id}" sec:authorize="hasRole('ROLE_ADMIN')">
                   <i class="fas fa-file-invoice-dollar text-secondary"></i>
                 </a>
                 &nbsp;
-                <a th:href="@{/cliente/eliminar/}+${cliente.id}" onclick="return confirm('Seguro que desea eliminar?')">
+                <a th:href="@{/cliente/eliminar/}+${cliente.id}" sec:authorize="hasRole('ROLE_ADMIN')"
+                  onclick="return confirm('Seguro que desea eliminar?')">
                   <i class="fas fa-trash-alt text-secondary"></i>
                 </a>
               </td>

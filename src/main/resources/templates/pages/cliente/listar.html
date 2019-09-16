@@ -11,7 +11,7 @@
           <h4 th:text="${titulo}" class="text-secondary"></h4>
         </div>
         <div class="float-right">
-          <a th:href="@{/cliente/form}" sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-info">Crear Cliente</a>
+          <a th:href="@{/cliente/form}" class="btn btn-info" sec:authorize="hasRole('ROLE_ADMIN')">Crear Cliente</a>
         </div>
       </div>
       <div class="card-body">
@@ -23,7 +23,7 @@
               <th>Apellido</th>
               <th>Email</th>
               <th>CreateAt</th>
-              <th>Acciones</th>
+              <th sec:authorize="hasRole('ROLE_ADMIN')">Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -36,7 +36,7 @@
               <td th:text="${cliente.apellido}"></td>
               <td th:text="${cliente.email}"></td>
               <td th:text="${cliente.createAt}"></td>
-              <td>
+              <td sec:authorize="hasRole('ROLE_ADMIN')">
                 <a th:href="@{/cliente/form/}+${cliente.id}" sec:authorize="hasRole('ROLE_ADMIN')">
                   <i class="fas fa-pencil-alt text-secondary"></i>
                 </a>

@@ -18,7 +18,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private LoginSuccessHandler loginSuccessHandler;
-	
+
 	@Bean
 	public BCryptPasswordEncoder getPasswordEncoder() {
 		return new BCryptPasswordEncoder();
@@ -38,15 +38,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		// Autorizacion a rutas y recursos
+		// Aplico restricciones de rutas de factura con annotation en los controllers
 		http.authorizeRequests()
-				.antMatchers("/", "/css/**", "/js/**", "/images/**", "/fonts/**", "/vendor/**","/cliente/listar", "/errors/**").permitAll()
+				.antMatchers("/", "/css/**", "/js/**", "/images/**", "/fonts/**", "/vendor/**", "/cliente/listar", "/errors/**").permitAll()
 				.antMatchers("/uploads/**").hasAnyRole("USER")
 				.antMatchers("/cliente/view/**").hasAnyRole("USER")
 				.antMatchers("/cliente/form/**").hasAnyRole("ADMIN")
 				.antMatchers("/cliente/eliminar/**").hasAnyRole("ADMIN")
-				.antMatchers("/factura/**").hasAnyRole("ADMIN")
+				// .antMatchers("/factura/**").hasAnyRole("ADMIN")
 				.anyRequest().authenticated()
-				.and().formLogin().successHandler(this.loginSuccessHandler) .loginPage("/login").permitAll()
+				.and().formLogin().successHandler(this.loginSuccessHandler).loginPage("/login").permitAll()
 				.and().logout().permitAll()
 				.and().exceptionHandling().accessDeniedPage("/403");
 	}

@@ -15,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
@@ -113,6 +114,7 @@ public class ClienteController {
 		return "pages/cliente/listar";
 	}
 
+	@Secured("ROLE_ADMIN")
 	@GetMapping("/form")
 	public String crear(Model model) {
 		model.addAttribute("titulo", "Alta Cliente");
@@ -120,6 +122,7 @@ public class ClienteController {
 		return "page/cliente/form";
 	}
 
+	@Secured("ROLE_ADMIN")
 	@PostMapping("/form")
 	public String save(@Valid Cliente cliente, BindingResult result, Model model,
 			@RequestParam(name = "form-cliente-foto") MultipartFile file, RedirectAttributes flash,
@@ -167,6 +170,7 @@ public class ClienteController {
 		return "redirect:/cliente/listar";
 	}
 
+	@Secured("ROLE_ADMIN")
 	@GetMapping("/eliminar/{id}")
 	public String delete(@PathVariable(value = "id") Long id, Model model, RedirectAttributes flash) {
 		if (id > 0) {

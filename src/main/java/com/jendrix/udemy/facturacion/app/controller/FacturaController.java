@@ -5,6 +5,7 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,6 +28,7 @@ import com.jendrix.udemy.facturacion.app.model.service.FacturaService;
 import com.jendrix.udemy.facturacion.app.model.service.ProductoService;
 
 @Controller
+@Secured("ROLE_ADMIN")
 @RequestMapping("/factura")
 @SessionAttributes("factura")
 public class FacturaController {
@@ -117,10 +119,10 @@ public class FacturaController {
 	public String delete(@PathVariable(value = "id") Long id, RedirectAttributes flash) {
 		Factura factura = facturaService.findById(id);
 		if (factura == null) {
-			flash.addFlashAttribute("error", "La factura no existe!");			
+			flash.addFlashAttribute("error", "La factura no existe!");
 			return "redirect:/cliente/listar";
 		}
-		
+
 		this.facturaService.delete(id);
 		flash.addFlashAttribute("success", "Factura eliminada!");
 		return "redirect:/cliente/view/" + factura.getCliente().getId();

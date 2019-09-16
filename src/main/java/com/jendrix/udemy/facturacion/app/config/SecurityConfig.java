@@ -1,5 +1,6 @@
 package com.jendrix.udemy.facturacion.app.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -10,9 +11,14 @@ import org.springframework.security.core.userdetails.User.UserBuilder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.jendrix.udemy.facturacion.app.handler.LoginSuccessHandler;
+
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+	@Autowired
+	private LoginSuccessHandler loginSuccessHandler;
+	
 	@Bean
 	public BCryptPasswordEncoder getPasswordEncoder() {
 		return new BCryptPasswordEncoder();
@@ -40,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/cliente/eliminar/**").hasAnyRole("ADMIN")
 				.antMatchers("/factura/**").hasAnyRole("ADMIN")
 				.anyRequest().authenticated()
-				.and().formLogin().loginPage("/login").permitAll()
+				.and().formLogin().successHandler(this.loginSuccessHandler) .loginPage("/login").permitAll()
 				.and().logout().permitAll()
 				.and().exceptionHandling().accessDeniedPage("/403");
 	}

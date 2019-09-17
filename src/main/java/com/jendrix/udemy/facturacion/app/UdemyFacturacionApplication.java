@@ -7,6 +7,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.jendrix.udemy.facturacion.app.model.service.UploadFileService;
 
@@ -16,6 +17,9 @@ public class UdemyFacturacionApplication implements CommandLineRunner {
 
 	@Autowired
 	private UploadFileService uploadFileService;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	private Logger log = LoggerFactory.getLogger(getClass());
 
@@ -31,6 +35,13 @@ public class UdemyFacturacionApplication implements CommandLineRunner {
 		log.info("Preparando upload folder ...");
 		this.uploadFileService.init();
 		log.info("Inicializacion de la aplicacion OK");
+
+		String password = "12345";
+		for (int i = 0; i < 4; i++) {
+			String bcryptPassword = this.passwordEncoder.encode(password);
+			System.out.println(bcryptPassword + ", " + password);
+		}
+
 	}
 
 }

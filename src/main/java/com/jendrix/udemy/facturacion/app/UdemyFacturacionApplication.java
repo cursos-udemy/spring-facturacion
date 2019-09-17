@@ -36,12 +36,8 @@ public class UdemyFacturacionApplication implements CommandLineRunner {
 		this.uploadFileService.init();
 		log.info("Inicializacion de la aplicacion OK");
 
-		String password = "12345";
-		for (int i = 0; i < 4; i++) {
-			String bcryptPassword = this.passwordEncoder.encode(password);
-			System.out.println(bcryptPassword + ", " + password);
-		}
-
+		System.out.println("admin: " + this.passwordEncoder.encode("admin"));
+		System.out.println("willy: " + this.passwordEncoder.encode("willy"));
 	}
 
 }

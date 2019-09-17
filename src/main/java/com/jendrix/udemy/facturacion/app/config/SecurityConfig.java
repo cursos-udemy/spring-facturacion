@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.User.UserBuilder;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.jendrix.udemy.facturacion.app.handler.LoginSuccessHandler;
@@ -25,11 +26,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private DataSource dataSource;
 
+	@Autowired
+	private UserDetailsService userDetailsService;
+
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		// Configuramos los usuarios de la aplicacion
 		// this.configureInMemory(auth);
-		this.configureJDBCAuthentication(auth);
+		//this.configureJDBCAuthentication(auth);
+		this.configureUserDetailsService(auth);
 	}
 
 	protected void configureInMemory(AuthenticationManagerBuilder auth) throws Exception {
@@ -50,6 +55,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.passwordEncoder(this.passwordEncoder)
 				.usersByUsernameQuery("select username, password, enabled from user where username = ?")
 				.authoritiesByUsernameQuery(sqlRoles.toString());
+	}
+
+	protected void configureUserDetailsService(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(this.userDetailsService)
+				.passwordEncoder(this.passwordEncoder);
 	}
 
 	@Override

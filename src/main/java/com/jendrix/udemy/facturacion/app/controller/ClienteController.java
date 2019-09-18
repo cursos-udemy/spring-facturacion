@@ -2,6 +2,7 @@ package com.jendrix.udemy.facturacion.app.controller;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -9,6 +10,8 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -55,11 +58,14 @@ public class ClienteController {
 	@Autowired
 	private UploadFileService uploadFileService;
 
+	@Autowired
+	private MessageSource messageSource;
+
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@GetMapping("/listar")
 	public String listar(@RequestParam(name = "page", defaultValue = "0") int page, Model model, Authentication authentication,
-			HttpServletRequest request) {
+			HttpServletRequest request, Locale locale) {
 		// version-1 recuperar informcion de autenticacion desde un argumento del metodo
 		if (authentication != null) {
 			log.info(String.format("El usuario %s solicita consultar la lista de usuarios", authentication.getName()));
@@ -85,7 +91,7 @@ public class ClienteController {
 			log.info("A traves del HttpeServletRequest es mas simple hacer la validacion del rol");
 		}
 
-		model.addAttribute("titulo", "Listado de clientes");
+		model.addAttribute("titulo", getMessage("page.cliente.listar.title"));
 		Pageable pageable = PageRequest.of(page, 4);
 		Page<Cliente> pageClientes = this.clienteService.findAll(pageable);
 		PageRender<Cliente> pageRender = new PageRender<Cliente>("/cliente/listar", pageClientes);
@@ -209,5 +215,9 @@ public class ClienteController {
 		}
 
 		return authentication.getAuthorities().contains(new SimpleGrantedAuthority(role));
+	}
+
+	public String getMessage(String code) {
+		return this.messageSource.getMessage(code, null, LocaleContextHolder.getLocale());
 	}
 }

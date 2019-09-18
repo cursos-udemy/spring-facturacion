@@ -11,7 +11,7 @@
           <h4 th:text="${titulo}" class="text-secondary"></h4>
         </div>
         <div class="float-right">
-          <a th:href="@{/cliente/form}" class="btn btn-info" sec:authorize="hasRole('ROLE_ADMIN')">Crear Cliente</a>
+          <a th:href="@{/cliente/form}" class="btn btn-info" sec:authorize="hasRole('ROLE_ADMIN')" th:text="#{page.cliente.action.create}"></a>
         </div>
       </div>
       <div class="card-body">
@@ -23,7 +23,7 @@
               <th th:text="#{label.cliente.apellido}">Apellido</th>
               <th th:text="#{label.cliente.email}">Email</th>
               <th th:text="#{label.cliente.createAt}">CreateAt</th>
-              <th sec:authorize="hasRole('ROLE_ADMIN')">Acciones</th>
+              <th sec:authorize="hasRole('ROLE_ADMIN')" th:text="#{page.table.column.actions}">Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -37,16 +37,14 @@
               <td th:text="${cliente.email}"></td>
               <td th:text="${cliente.createAt}"></td>
               <td sec:authorize="hasRole('ROLE_ADMIN')">
-                <a th:href="@{/cliente/form/}+${cliente.id}" sec:authorize="hasRole('ROLE_ADMIN')">
+                <a th:href="@{/cliente/form/}+${cliente.id}" sec:authorize="hasRole('ROLE_ADMIN')" class="mx-1">
                   <i class="fas fa-pencil-alt text-secondary"></i>
                 </a>
-                &nbsp;
-                <a th:href="@{/factura/form/}+${cliente.id}" sec:authorize="hasRole('ROLE_ADMIN')">
+                <a th:href="@{/factura/form/}+${cliente.id}" sec:authorize="hasRole('ROLE_ADMIN')" class="mx-1">
                   <i class="fas fa-file-invoice-dollar text-secondary"></i>
                 </a>
-                &nbsp;
-                <a th:href="@{/cliente/eliminar/}+${cliente.id}" sec:authorize="hasRole('ROLE_ADMIN')"
-                  onclick="return confirm('Seguro que desea eliminar?')">
+                <a th:href="@{/cliente/eliminar/}+${cliente.id}" sec:authorize="hasRole('ROLE_ADMIN')" class="mx-1"
+                  onclick="return confirm('Esta seguro de eliminar el cliente?')">
                   <i class="fas fa-trash-alt text-secondary"></i>
                 </a>
               </td>

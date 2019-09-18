@@ -44,7 +44,7 @@
                   <i class="fas fa-file-invoice-dollar text-secondary"></i>
                 </a>
                 <a th:href="@{/cliente/eliminar/}+${cliente.id}" sec:authorize="hasRole('ROLE_ADMIN')" class="mx-1"
-                  onclick="return confirm('Esta seguro de eliminar el cliente?')">
+                  th:onclick="'return confirm(\''+ #{page.cliente.action.delete.confirm} + '\');'">
                   <i class="fas fa-trash-alt text-secondary"></i>
                 </a>
               </td>

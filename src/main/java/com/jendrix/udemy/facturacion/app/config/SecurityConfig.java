@@ -33,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		// Configuramos los usuarios de la aplicacion
 		// this.configureInMemory(auth);
-		//this.configureJDBCAuthentication(auth);
+		// this.configureJDBCAuthentication(auth);
 		this.configureUserDetailsService(auth);
 	}
 
@@ -67,7 +67,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		// Autorizacion a rutas y recursos
 		// Aplico restricciones de rutas de factura con annotation en los controllers
 		http.authorizeRequests()
-				.antMatchers("/", "/css/**", "/js/**", "/images/**", "/fonts/**", "/vendor/**", "/cliente/listar", "/errors/**").permitAll()
+				.antMatchers("/", "/css/**", "/js/**", "/images/**", "/fonts/**", "/vendor/**", "/cliente/listar", "/errors/**", "/locale").permitAll()
 				.antMatchers("/uploads/**").hasAnyRole("USER")
 				.antMatchers("/cliente/view/**").hasAnyRole("USER")
 				.antMatchers("/cliente/form/**").hasAnyRole("ADMIN")

@@ -16,13 +16,13 @@
   <div id="notfound">
     <div class="notfound">
       <div class="notfound-404">
-        <h3>Oops! Acceso Denegado</h3>
+        <h3 th:text="#{page.403.title}">Oops! Acceso Denegado!</h3>
         <h1>
           <span>4</span><span>0</span><span>3</span>
         </h1>
       </div>
-      <h2>Lo sentimos <span th:text="${#authentication.name}" class="text-user"></span>, pero no tiene permisos para acceder a este recurso</h2>
-      <a th:href="@{/}" class="text-link">Ir a la p&aacute;gina principal</a>
+      <h2><span th:text="#{page.404.text.prefix}">Lo sentimos</span>∑<span th:text="${#authentication.name}" class="text-user"></span><span th:text="#{page.403.text.suffix}"></span></h2>
+      <a th:href="@{/}" class="text-link" th:text="#{page.link.home}">Ir a la home</a>
     </div>
   </div>
 </body>

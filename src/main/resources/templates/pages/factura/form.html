@@ -14,7 +14,7 @@
         <form th:action="@{/factura/form/}" th:object="${factura}" method="post">
 
           <div class="form-group row">
-            <label for="cliente" class="col-sm-2 col-form-label" th:text="'Cliente'"></label>
+            <label for="cliente" class="col-sm-2 col-form-label" th:text="#{label.cliente}"></label>
             <div class="col-sm-6">
               <input name="cliente" th:value="${factura.cliente.nombre} + ' ' + ${factura.cliente.apellido}" class="form-control"
                 disabled='disabled' />
@@ -22,7 +22,7 @@
           </div>
 
           <div class="form-group row">
-            <label for="descripcion" class="col-sm-2 col-form-label" th:text="'Descripción'"></label>
+            <label for="descripcion" class="col-sm-2 col-form-label" th:text="#{label.factura.descripcion}"></label>
             <div class="col-sm-6">
               <input type="text" th:field="*{descripcion}" class="form-control" th:errorclass="'form-control is-invalid'" />
               <div class="invalid-feedback" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></div>
@@ -30,13 +30,13 @@
           </div>
 
           <div class="form-group row">
-            <label for="observacion" class="col-sm-2 col-form-label" th:text="'Observaciones'"></label>
+            <label for="observacion" class="col-sm-2 col-form-label" th:text="#{label.factura.observaciones}"></label>
             <div class="col-sm-6">
               <textarea th:field="*{observaciones}" class="form-control"></textarea>
             </div>
           </div>
           <div class="form-group row">
-            <label for="buscar_producto" class="col-sm-2 col-form-label" th:text="'Buscar producto'"></label>
+            <label for="buscar_producto" class="col-sm-2 col-form-label" th:text="#{page.factura.action.find.producto}"></label>
             <div class="col-sm-6">
               <input type="text" name="buscar_producto" id="buscar_producto" class="form-control" />
             </div>
@@ -48,11 +48,11 @@
           <table id="cargarItemProductos" class="table table-striped table-hover table-responsive-md">
             <thead>
               <tr>
-                <th>Nombre</th>
-                <th>Precio</th>
-                <th>Cantidad</th>
-                <th>Total</th>
-                <th>Eliminar</th>
+                <th th:text="#{label.producto}">Nombre</th>
+                <th th:text="#{label.itemFactura.importeUnitario}">Precio</th>
+                <th th:text="#{label.itemFactura.cantidad}">Cantidad</th>
+                <th th:text="#{label.itemFactura.importeTotal}">Total</th>
+                <th th:text="#{page.table.column.actions}">Eliminar</th>
               </tr>
             </thead>
             <tbody>
@@ -61,26 +61,23 @@
 
           <br>
           <h5>
-            Total <span class="badge badge-secondary" id="gran_total">0</span>
+            <span th:text="#{label.itemFactura.importeTotal}"></span> <span class="badge badge-secondary" id="gran_total">0</span>
           </h5>
  
           <br>
           <div class="form-group row">
             <div class="col-sm-6">
-              <a class="btn btn-danger" th:href="@{'/cliente/view/' + ${factura.cliente.id}}" th:text="'&laquo; volver'"></a>
+              <a class="btn btn-danger" th:href="@{'/cliente/view/' + ${factura.cliente.id}}" th:text="#{page.action.back}"></a>
               <button type="submit" th:text="${titulo}" class="btn btn-success"></button>
             </div>
           </div>
         </form>
 
-
       </div>
     </div>
   </div>
 
-  <footer th:replace="layout/footer::footer"></footer>
-  
+  <footer th:replace="layout/footer::footer"></footer>  
   <script th:replace="pages/factura/js/autocomplete-productos::javascript"></script>
-  
 </body>
 </html>

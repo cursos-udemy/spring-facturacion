@@ -3,8 +3,8 @@
 <body>
   <header th:fragment="navbar">
     <nav class="navbar navbar-expand-lg navbar-dark bg-secondary mb-4">
-      <img th:src="@{/images/shards-logo.svg}" alt="Example Navbar 1" class="mr-2" height="30" />
-      <a class="navbar-brand" href="#">Facturaci&oacute;n</a>
+      <img th:src="@{/images/shards-logo.svg}" class="mr-2" height="30" />
+      <a class="navbar-brand" href="#" th:text="#{page.navbar.brand}">Facturacion</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown-7"
         aria-controls="navbarNavDropdown-7" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -12,28 +12,25 @@
       <div class="collapse navbar-collapse" id="navbarNavDropdown-7">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="#">
-              Home <span class="sr-only">(current)</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" th:href="@{/cliente/listar}">Clientes</a>
+            <a class="nav-link" th:href="@{/cliente/listar}" th:text="#{page.navbar.menu.customer}">Clientes</a>
           </li>
         </ul>
         <ul class="navbar-nav navbar-right">
           <li sec:authorize="!isAuthenticated()">
-            <a th:href="@{/login}" class="btn btn-outline-warning">Sign In</a>
+            <a th:href="@{/login}" class="btn btn-outline-warning" th:text="#{page.login.signin}">Sign In</a>
           </li>
 
           <li class="dropdown" sec:authorize="isAuthenticated()">
             <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="false"> <span sec:authentication="name"></span> </a>
+              aria-haspopup="true" aria-expanded="false">
+              <span sec:authentication="name"></span>
+            </a>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              <a class="dropdown-item" href="#">Perfil</a>
+              <a class="dropdown-item" href="#" th:text="#{page.navbar.menu.profile}">Perfil</a>
               <div class="dropdown-divider"></div>
               <form id="formLogout" th:action="@{/logout}" method="post">
-                <button type="submit" class="dropdown-item">Sign out</button>
-              </form>      
+                <button type="submit" class="dropdown-item" th:text="#{page.login.signout}">Sign out</button>
+              </form>
             </div>
           </li>
         </ul>
@@ -46,14 +43,14 @@
           </li>
           <li class="nav-item dropdown show">
             <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownLangLink" data-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="false"> <span th:text="#{page.navbar.locale.lang}"></span> </a>
+              aria-haspopup="true" aria-expanded="false">
+              <span th:text="#{page.navbar.locale.lang}"></span>
+            </a>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
               <a class="dropdown-item" th:href="@{/locale(lang=es_AR)}" th:text="#{page.navbar.locale.lang.es}"></a>
               <a class="dropdown-item" th:href="@{/locale(lang=en_US)}" th:text="#{page.navbar.locale.lang.en}"></a>
             </div>
           </li>
-
-
         </ul>
       </div>
     </nav>

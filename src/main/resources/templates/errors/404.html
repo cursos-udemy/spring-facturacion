@@ -16,13 +16,13 @@
   <div id="notfound">
     <div class="notfound">
       <div class="notfound-404">
-        <h3>Oops! Pagina no encontrada</h3>
+        <h3 th:text="#{page.404.title}">Oops! Pagina no encontrada</h3>
         <h1>
           <span>4</span><span>0</span><span>4</span>
         </h1>
       </div>
-      <h2>Lo sentimos, pero la p&aacute;gina que solicit&oacute; no se encontr&oacute;</h2>
-      <a th:href="@{/}" class="text-link">Ir a la p&aacute;gina principal</a>      
+      <h2 th:text="#{page.404.text}">Lo sentimos, pero la pagina que solicito no se encontro</h2>
+      <a th:href="@{/}" class="text-link" th:text="#{page.link.home}">home</a>      
     </div>
   </div>
 </body>

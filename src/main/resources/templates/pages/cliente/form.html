@@ -19,30 +19,29 @@
         <div class="row mb-5">
           <div class="col-md-12">
             <form th:action="@{/cliente/form}" th:object="${cliente}" th:method="post" enctype="multipart/form-data">
-              <!-- <input type="hidden" id="form-cliente-id" th:field="*{id}"> -->
               <div class="row">
                 <div class="form-group col-md-6">
-                  <label for="form-cliente-nombre" class="col-form-label">Nombre</label>
-                  <input id="form-cliente-nombre" th:field="*{nombre}" type="text" class="form-control" placeholder="Nombre"
+                  <label for="form-cliente-nombre" class="col-form-label" th:text="#{label.cliente.nombre}">Nombre</label>
+                  <input id="form-cliente-nombre" th:field="*{nombre}" type="text" class="form-control" th:placeholder="#{label.cliente.nombre}"
                     th:errorclass="'form-control is-invalid'">
                   <small th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="form-text text-danger"></small>
                 </div>
                 <div class="form-group col-md-6">
-                  <label for="form-cliente-apellido" class="col-form-label">Apellido</label>
-                  <input id="form-cliente-apellido" th:field="*{apellido}" type="text" class="form-control" placeholder="Apellido"
+                  <label for="form-cliente-apellido" class="col-form-label" th:text="#{label.cliente.apellido}">Apellido</label>
+                  <input id="form-cliente-apellido" th:field="*{apellido}" type="text" class="form-control" th:placeholder="#{label.cliente.apellido}"
                     th:errorclass="'form-control is-invalid'">
                   <small th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}" class="form-text text-danger"></small>
                 </div>
               </div>
               <div class="row">
                 <div class="form-group col-md-6 mb-4">
-                  <label for="form-cliente-email" class="col-form-label">Email</label>
-                  <input id="form-cliente-email" th:field="*{email}" type="text" class="form-control" placeholder="Email"
+                  <label for="form-cliente-email" class="col-form-label" th:text="#{label.cliente.email}">Email</label>
+                  <input id="form-cliente-email" th:field="*{email}" type="text" class="form-control" th:placeholder="#{label.cliente.email}"
                     th:errorclass="'form-control is-invalid'">
                   <small th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="form-text text-danger"></small>
                 </div>
                 <div class="form-group col-md-6 mb-4">
-                  <label for="form-cliente-createAt" class="col-form-label">Fecha Alta</label>
+                  <label for="form-cliente-createAt" class="col-form-label" th:text="#{label.cliente.createAt}">Fecha Alta</label>
                   <input id="form-cliente-createAt" th:field="*{createAt}" type="text" class="form-control" data-date-format="dd/mm/yyyy"
                     autocomplete="off" th:errorclass="'form-control is-invalid'">
                   <small th:if="${#fields.hasErrors('createAt')}" th:errors="*{createAt}" class="form-text text-danger"></small>
@@ -50,7 +49,7 @@
               </div>
               <div class="row">
                 <div class="form-group col-md-6 mb-4">
-                  <label for="form-cliente-foto" class="col-form-label">Foto</label>
+                  <label for="form-cliente-foto" class="col-form-label" th:text="#{label.cliente.foto}">Foto</label>
                   <div class="custom-file mb-3">
                     <input id="form-cliente-foto" name="form-cliente-foto" type="file" class="custom-file-input btn-file-upload"
                       aria-describedby="form-cliente-foto">
@@ -62,7 +61,7 @@
               <br>
               <div class="row">
                 <div class="col-md-12">
-                  <button type="submit" class="btn btn-outline-success">Guardar</button>
+                  <button type="submit" class="btn btn-outline-success"><span th:text="#{page.action.save}"></span></button>
                 </div>
               </div>
             </form>

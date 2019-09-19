@@ -9,6 +9,11 @@
     <div class="card">
       <div class="card-header" th:text="${titulo}"></div>
       <div class="card-body">
+        <div class="card-title">
+          <a th:href="@{'/factura/view/'+${factura.id}(format=pdf)}" >
+            <i class="far fa-file-pdf fa-2x text-danger"></i>
+          </a>
+        </div>
 
         <ul class="list-group my-2">
           <li class="list-group-item list-group-item-primary" th:text="#{page.factura.view.cliente.info}"></li>
@@ -50,14 +55,16 @@
         </h5>
 
         <div class="card border-info mb-4" style="max-width: 20rem;">
-          <div class="card-header"><span th:text="#{label.factura.observaciones}"></span></div>
+          <div class="card-header">
+            <span th:text="#{label.factura.observaciones}"></span>
+          </div>
           <div class="card-body">
             <p class="card-text" th:text="${factura.observaciones}" th:if="${not #strings.isEmpty(factura.observaciones)}"></p>
             <h4 class="card-title" th:if="${#strings.isEmpty(factura.observaciones)}" th:text="'No tiene observaciones'"></h4>
           </div>
         </div>
 
-        <a th:href="@{'/cliente/view/' + ${factura.cliente.id}}" class="btn btn-light btn-xs" th:text="#{page.action.back}">&laquo; volver</a>
+        <a th:href="@{'/cliente/view/' + ${factura.cliente.id}}" class="btn btn-light btn-xs" th:text="#{page.action.back}"></a>
       </div>
     </div>
 

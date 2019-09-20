@@ -10,12 +10,15 @@
       <div class="card-header" th:text="${titulo}"></div>
       <div class="card-body">
         <div class="card-title">
-          <a th:href="@{'/factura/view/'+${factura.id}(format=pdf)}" >
+          <a th:href="@{'/factura/view/'+${factura.id}(format=xlsx)}" class="float-right mx-2 my-2">
+            <i class="far fa-file-excel fa-2x text-success"></i>
+          </a>
+          <a th:href="@{'/factura/view/'+${factura.id}(format=pdf)}" class="float-right mx-2 my-2">
             <i class="far fa-file-pdf fa-2x text-danger"></i>
           </a>
         </div>
 
-        <ul class="list-group my-2">
+        <ul class="list-group my-2" style="width: 100%;">
           <li class="list-group-item list-group-item-primary" th:text="#{page.factura.view.cliente.info}"></li>
           <li class="list-group-item" th:text="${factura.cliente.nombreCompleto}"></li>
           <li class="list-group-item" th:text="${factura.cliente.email}"></li>

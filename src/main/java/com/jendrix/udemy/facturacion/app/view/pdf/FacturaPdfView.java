@@ -19,7 +19,7 @@ import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 
-@Component("pages/factura/view")
+@Component("pages/factura/view.pdf")
 public class FacturaPdfView extends AbstractPdfView {
 
 	@Autowired

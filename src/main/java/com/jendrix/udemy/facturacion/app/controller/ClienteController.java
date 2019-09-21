@@ -2,6 +2,7 @@ package com.jendrix.udemy.facturacion.app.controller;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,6 +33,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
@@ -98,6 +100,12 @@ public class ClienteController {
 		model.addAttribute("clientes", pageClientes);
 		model.addAttribute("page", pageRender);
 		return "pages/cliente/listar";
+	}
+
+	@ResponseBody
+	@GetMapping("/api/listar-rest")
+	public List<Cliente> listar() {
+		return this.clienteService.findAll();
 	}
 
 	@GetMapping("/view/{id}")

@@ -67,7 +67,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		// Autorizacion a rutas y recursos
 		// Aplico restricciones de rutas de factura con annotation en los controllers
 		http.authorizeRequests()
-				.antMatchers("/", "/css/**", "/js/**", "/images/**", "/fonts/**", "/vendor/**", "/cliente/listar", "/errors/**", "/locale").permitAll()
+				.antMatchers("/", "/css/**", "/js/**", "/images/**", "/fonts/**", "/vendor/**", "/cliente/listar**", "/errors/**", "/locale",
+						"/cliente/api/v1**")
+				.permitAll()
 				.antMatchers("/uploads/**").hasAnyRole("USER")
 				.antMatchers("/cliente/view/**").hasAnyRole("USER")
 				.antMatchers("/cliente/form/**").hasAnyRole("ADMIN")

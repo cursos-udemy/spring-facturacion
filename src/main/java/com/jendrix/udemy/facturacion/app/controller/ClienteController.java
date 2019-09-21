@@ -66,7 +66,7 @@ public class ClienteController {
 	@GetMapping("/listar")
 	public String listar(@RequestParam(name = "page", defaultValue = "0") int page, Model model, Authentication authentication,
 			HttpServletRequest request, Locale locale) {
-		// version-1 recuperar informcion de autenticacion desde un argumento del metodo
+		// version-1 recuperar informacion de autenticacion desde un argumento del metodo
 		if (authentication != null) {
 			log.info(String.format("El usuario %s solicita consultar la lista de usuarios", authentication.getName()));
 		}
@@ -116,14 +116,14 @@ public class ClienteController {
 			return "pages/cliente/view";
 		}
 
-		flash.addFlashAttribute("error", "No se encontro el cliente");
+		flash.addFlashAttribute("error", getMessage("valid.cliente.notfound"));
 		return "pages/cliente/listar";
 	}
 
 	@Secured("ROLE_ADMIN")
 	@GetMapping("/form")
 	public String crear(Model model) {
-		model.addAttribute("titulo", "Alta Cliente");
+		model.addAttribute("titulo", getMessage("label.cliente"));
 		model.addAttribute("cliente", new Cliente());
 		return "page/cliente/form";
 	}
@@ -135,7 +135,7 @@ public class ClienteController {
 			SessionStatus status) {
 
 		if (result.hasErrors()) {
-			model.addAttribute("titulo", "Alta Cliente");
+			model.addAttribute("titulo", getMessage("label.cliente"));
 			return "pages/cliente/form";
 		}
 

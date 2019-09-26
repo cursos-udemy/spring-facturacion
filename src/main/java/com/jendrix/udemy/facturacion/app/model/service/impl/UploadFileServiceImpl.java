@@ -20,7 +20,7 @@ import com.jendrix.udemy.facturacion.app.model.service.UploadFileService;
 public class UploadFileServiceImpl implements UploadFileService {
 
 	// TODO: read from properties
-	private static final String UPLOAD_FOLDER = "/Users/fravegamac/Personal/uploads";
+	private static final String UPLOAD_FOLDER = "/tmp/uploads";
 
 	@Override
 	public Resource load(String filename) throws MalformedURLException {

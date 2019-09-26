@@ -47,3 +47,12 @@ INSERT INTO item_factura (id, cantidad, factura_id, producto_id, importe_unitari
 
 INSERT INTO factura (id, descripcion, cliente_id, fecha, numero, tipo_factura) VALUES(2, 'Factura Bicicleta', 1, NOW(), '001-00000002', 'B');
 INSERT INTO item_factura (id, cantidad, factura_id, producto_id, importe_unitario) VALUES(5, 3, 2, 6, 35980);
+
+
+insert into user (username, password, enabled) values ('admin', '$2a$10$tuKj0e4UA008RvmwrfGTDe.fzpc5E42NMg6ZFIIqNaOSDorIdUby6', 1);
+insert into user (username, password, enabled) values ('willy', '$2a$10$7hsYnkGdzqP9J8zFe85IfuYVrTlmVVsnuvX36ralZ01s1N1YtkmOq', 1);
+
+insert into authority (user_id, role) values (1, 'ROLE_ADMIN');
+insert into authority (user_id, role) values (1, 'ROLE_USER');
+insert into authority (user_id, role) values (2, 'ROLE_USER');
+
